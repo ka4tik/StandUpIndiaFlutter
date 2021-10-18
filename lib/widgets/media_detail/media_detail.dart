@@ -192,7 +192,8 @@ class VideoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return ListView.builder(
+    return SingleChildScrollView(child:
+        ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
           // Let the ListView know how many items it needs to build.
@@ -204,7 +205,7 @@ class VideoList extends StatelessWidget {
 
             return item.getThumb(context, items);
           },
-        );
+        ));
   }
 }
 
