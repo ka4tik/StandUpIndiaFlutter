@@ -22,6 +22,6 @@ public class ComicsController {
     private ComediansRepository comediansRepository;
     @GetMapping("/")
     public List<Comedian> getComedians() {
-        return comediansRepository.findAll();
+        return comediansRepository.findAllByOrderByLovedRatioDesc();
     }
 }

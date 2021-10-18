@@ -20,4 +20,8 @@ public class Comedian {
     private int id;
     private String title;
     private String posterPath;
+    private Integer likes;
+    private Integer dislikes;
+    private Double lovedRatio;
+    private Integer viewCount;
 }

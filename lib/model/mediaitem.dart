@@ -5,6 +5,9 @@ class MediaItem {
   MediaType type;
   int id;
   double voteAverage;
+  double lovedRatio;
+  int viewCount;
+
   String title;
   String posterPath;
   String backdropPath;
@@ -29,7 +32,10 @@ class MediaItem {
       : type = type,
         id = jsonMap["id"].toInt(),
         voteAverage = 123.00,
-        title = jsonMap[(type == MediaType.movie ? "title" : "name")],
+        lovedRatio = jsonMap["lovedRatio"],
+        viewCount = jsonMap["viewCount"],
+
+      title = jsonMap[(type == MediaType.movie ? "title" : "name")],
         posterPath = jsonMap["posterPath"] ?? "",
         backdropPath = jsonMap["backdrop_path"] ?? "",
         overview = jsonMap["overview"],

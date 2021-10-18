@@ -47,16 +47,12 @@ class MediaListItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    movie.voteAverage.toString(),
+                    movie.lovedRatio.toString() + " Love Ratio",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Container(
                     width: 4.0,
                   ),
-                  Icon(
-                    Icons.star,
-                    size: 16.0,
-                  )
                 ],
               ),
               Container(
@@ -65,16 +61,12 @@ class MediaListItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    movie.getReleaseYear().toString(),
+                    movie.viewCount.toString() + " views",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Container(
                     width: 4.0,
                   ),
-                  Icon(
-                    Icons.date_range,
-                    size: 16.0,
-                  )
                 ],
               )
             ],
