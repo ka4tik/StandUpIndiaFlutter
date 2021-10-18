@@ -22,10 +22,10 @@ goToSeasonDetails(BuildContext context, MediaItem show, TvSeason season) =>
 goToActorDetails(BuildContext context, Actor actor) {
   _pushWidgetWithFade(context, ActorDetailScreen(actor));
 }
-goToVideoDetails(BuildContext context, Video video, List<Video> items) {
-  _pushWidgetWithFade(context, VideoDetailScreen(video, items));
-}
 
+goToVideoDetails(BuildContext context, Video video, List<Video> items) {
+  _pushReplaceWidgetWithFade(context, VideoDetailScreen(video, items));
+}
 
 goToFavorites(BuildContext context) {
   _pushWidgetWithFade(context, FavoriteScreen());
@@ -33,13 +33,25 @@ goToFavorites(BuildContext context) {
 
 _pushWidgetWithFade(BuildContext context, Widget widget) {
   Navigator.of(context).push(
-        PageRouteBuilder(
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) =>
-                    FadeTransition(opacity: animation, child: child),
-            pageBuilder: (BuildContext context, Animation animation,
-                Animation secondaryAnimation) {
-              return widget;
-            }),
-      );
+    PageRouteBuilder(
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(opacity: animation, child: child),
+        pageBuilder: (BuildContext context, Animation animation,
+            Animation secondaryAnimation) {
+          return widget;
+        }),
+  );
+}
+
+_pushReplaceWidgetWithFade(BuildContext context, Widget widget) {
+  // Route route = MaterialPageRoute(builder: (context) => NextPage());
+  Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+              FadeTransition(opacity: animation, child: child),
+          pageBuilder: (BuildContext context, Animation animation,
+              Animation secondaryAnimation) {
+            return widget;
+          }));
 }

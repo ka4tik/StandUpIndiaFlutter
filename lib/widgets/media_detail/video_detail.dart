@@ -33,7 +33,7 @@ class VideoDetailScreen extends StatelessWidget {
               child: Column(
             children: <Widget>[
               const Text(
-                'other videos',
+                'more videos',
                 style: TextStyle(color: Colors.red, height: 1, fontSize: 30),
               ),
               ListView.builder(
