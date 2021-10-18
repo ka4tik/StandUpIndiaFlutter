@@ -7,6 +7,7 @@ import 'package:standup_india/model/video.dart';
 import 'package:standup_india/scoped_models/app_model.dart';
 import 'package:standup_india/util/api_client.dart';
 import 'package:standup_india/util/mediaproviders.dart';
+import 'package:standup_india/widgets/media_list/media_list_item.dart';
 import 'package:standup_india/widgets/utilviews/bottom_gradient.dart';
 import 'package:standup_india/widgets/utilviews/text_bubble.dart';
 
@@ -88,13 +89,13 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
             Row(
               children: <Widget>[
                 TextBubble(
-                  mediaItem.getReleaseYear().toString(),
+                  mediaItem.lovedRatio.toString() + " Likes/Dislikes",
                   backgroundColor: Color(0xffF47663),
                 ),
                 Container(
                   width: 8.0,
                 ),
-                TextBubble(mediaItem.voteAverage.toString(),
+                TextBubble(NumberFormatter.formatter(mediaItem.viewCount.toString()),
                     backgroundColor: Color(0xffF47663)),
               ],
             ),
