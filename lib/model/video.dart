@@ -19,8 +19,10 @@ class Video {
         thumbnail = jsonMap['thumbnail'];
 
   Widget getThumb(context, items) => GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () => goToVideoDetails(context, this, items),
-      child: Center(
+      child: IgnorePointer(
+          child: Center(
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -40,5 +42,5 @@ class Video {
             ],
           ),
         ),
-      ));
+      )));
 }
