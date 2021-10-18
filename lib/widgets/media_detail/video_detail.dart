@@ -13,34 +13,46 @@ class VideoDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var  t = SliverList(
-        delegate: SliverChildListDelegate(<Widget>[
-          Container(
-            height: 300,
-            child: video(this._video.url)
-          )]));
+    items.remove(this._video);
+    var t = SliverList(
+        delegate: SliverChildListDelegate(
+            <Widget>[Container(height: 250, child: video(this._video.url))]));
     return Scaffold(
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: Colors.black,
         body: CustomScrollView(
           slivers: <Widget>[t, otherVideos(context, items)],
         ));
   }
 
   Widget otherVideos(BuildContext context, List<Video> items) {
-
     return SliverList(
         delegate: SliverChildListDelegate(<Widget>[
-        Container(
-          height: 300,
-          child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (BuildContext context, int index) {
-                final item = items[index];
+      Container(
+          height: 600,
+          child: SingleChildScrollView(
+              child: Column(
+            children: <Widget>[
+              const Text(
+                'other videos',
+                style: TextStyle(color: Colors.red, height: 1, fontSize: 30),
+              ),
+              ListView.builder(
+                // scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                // Let the ListView know how many items it needs to build.
+                itemCount: items.length,
+                // Provide a builder function. This is where the magic happens.
+                // Convert each item into a widget based on the type of item it is.
+                itemBuilder: (context, index) {
+                  final item = items[index];
 
-                return item.getThumb(context, items);
-              }),
-        )]));
-
+                  return item.getThumb(context, items);
+                },
+              )
+            ],
+          )))
+    ]));
   }
 }
 

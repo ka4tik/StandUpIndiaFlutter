@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:standup_india/model/cast.dart';
 import 'package:standup_india/model/mediaitem.dart';
-import 'package:standup_india/model/tvseason.dart';
 import 'package:standup_india/model/video.dart';
 import 'package:standup_india/scoped_models/app_model.dart';
 import 'package:standup_india/util/api_client.dart';
@@ -15,7 +13,6 @@ import 'package:standup_india/widgets/utilviews/text_bubble.dart';
 class MediaDetailScreen extends StatefulWidget {
   final MediaItem _mediaItem;
   final MediaProvider provider;
-  final ApiClient _apiClient = ApiClient();
 
   MediaDetailScreen(this._mediaItem, this.provider);
 
@@ -26,55 +23,14 @@ class MediaDetailScreen extends StatefulWidget {
 }
 
 class MediaDetailScreenState extends State<MediaDetailScreen> {
-  List<Actor> _actorList = [];
-  List<TvSeason> _seasonList = [];
-  List<MediaItem> _similarMedia = [];
-  dynamic _mediaDetails;
-  bool _visible = false;
-  final ApiClient _apiClient = ApiClient();
 
+  bool _visible = false;
   @override
   void initState() {
     super.initState();
-    _loadCast();
-    _loadDetails();
-    _loadSimilar();
-    if (widget._mediaItem.type == MediaType.show) _loadSeasons();
-
     Timer(Duration(milliseconds: 100), () => setState(() => _visible = true));
   }
 
-  void _loadCast() async {
-    try {
-      List<Actor> cast = await widget.provider.loadCast(widget._mediaItem.id);
-      setState(() => _actorList = cast);
-    } catch (e) {}
-  }
-
-  void _loadDetails() async {
-    try {
-      dynamic details = await widget.provider.getDetails(widget._mediaItem.id);
-      setState(() => _mediaDetails = details);
-    } catch (e) {
-      e.toString();
-    }
-  }
-
-  void _loadSeasons() async {
-    try {
-      List<TvSeason> seasons =
-          await widget._apiClient.getShowSeasons(widget._mediaItem.id);
-      setState(() => _seasonList = seasons);
-    } catch (e) {}
-  }
-
-  void _loadSimilar() async {
-    try {
-      List<MediaItem> similar =
-          await widget.provider.getSimilar(widget._mediaItem.id);
-      setState(() => _similarMedia = similar);
-    } catch (e) {}
-  }
 
   @override
   Widget build(BuildContext context) {
