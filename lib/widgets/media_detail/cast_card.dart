@@ -24,7 +24,7 @@ class CastCard extends StatelessWidget {
             Hero(
               tag: 'Cast-Hero-${actor.id}',
               child: FadeInImage.assetNetwork(
-                placeholder: 'assets/placeholder.jpg',
+                placeholder: 'assets/placeholder.png',
                 image: actor.profilePictureUrl,
                 fit: BoxFit.cover,
                 height: height,

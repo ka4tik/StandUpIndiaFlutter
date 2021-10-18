@@ -30,7 +30,7 @@ class SimilarSection extends StatelessWidget {
                       onTap: () => goToMovieDetails(context, movie),
                       child: FadeInImage.assetNetwork(
                         image: movie.getPosterUrl(),
-                        placeholder: 'assets/placeholder.jpg',
+                        placeholder: 'assets/placeholder.png',
                         height: 150.0,
                         fit: BoxFit.cover,
                       ),

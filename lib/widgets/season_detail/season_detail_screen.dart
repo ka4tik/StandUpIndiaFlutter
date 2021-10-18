@@ -37,7 +37,7 @@ class SeasonDetailScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                     height: 230.0,
                     width: double.infinity,
-                    placeholder: "assets/placeholder.jpg",
+                    placeholder: "assets/placeholder.png",
                     image: show.getBackDropUrl()),
                 Expanded(
                   child: Container(
@@ -78,7 +78,7 @@ class SeasonDetailScreen extends StatelessWidget {
                 tag: 'Season-Hero-${season.id}',
                 child: FadeInImage.assetNetwork(
                     width: 100.0,
-                    placeholder: "assets/placeholder.jpg",
+                    placeholder: "assets/placeholder.png",
                     image: season.getPosterUrl()),
               ),
             ),

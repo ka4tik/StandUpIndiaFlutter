@@ -19,7 +19,7 @@ class EpisodeCard extends StatelessWidget {
                 fit: BoxFit.cover,
                 height: 220.0,
                 width: double.infinity,
-                placeholder: "assets/placeholder.jpg",
+                placeholder: "assets/placeholder.png",
                 image: episode.stillUrl),
             ListTile(
               title: Text(episode.title),

@@ -7,6 +7,7 @@ import 'package:standup_india/model/episode.dart';
 import 'package:standup_india/model/mediaitem.dart';
 import 'package:standup_india/model/searchresult.dart';
 import 'package:standup_india/model/tvseason.dart';
+import 'package:standup_india/model/video.dart';
 import 'package:standup_india/util/constants.dart';
 
 class ApiClient {
@@ -15,23 +16,39 @@ class ApiClient {
 
   ApiClient._internal();
 
-  final String baseUrl = 'api.themoviedb.org';
+  final String baseUrl = '10.0.2.2:8080';
 
   factory ApiClient() => _client;
 
   Future<dynamic> _getJson(Uri uri) async {
-    var response = await (await _http.getUrl(uri)).close();
-    var transformedResponse = await response.transform(utf8.decoder).join();
-    return json.decode(transformedResponse);
+    try {
+      var response = await (await _http.getUrl(uri)).close();
+      var transformedResponse = await response.transform(utf8.decoder).join();
+      return json.decode(transformedResponse);
+    }
+    catch(e) {
+      print('Exception occurred');
+    }
+
   }
 
   Future<List<MediaItem>> fetchMovies(){
 
-   String j = "[{\"id\": 123, \"title\": \"Tanmay Bhat\", \"poster_path\": \"https://upload.wikimedia.org/wikipedia/commons/d/df/Tanmay_Bhat.png\"}]";
+   // String j = "[{\"id\": 123, \"title\": \"Tanmay Bhat\", \"poster_path\": \"https://upload.wikimedia.org/wikipedia/commons/d/df/Tanmay_Bhat.png\"},{\"id\": 432, \"title\": \"T Bhat\", \"poster_path\": \"https://upload.wikimedia.org/wikipedia/commons/d/df/Tanmay_Bhat.png\"}]";
+    var url = Uri.http(baseUrl, '');
 
-
-    return Future<List<MediaItem>>.value(jsonDecode(j).
+    return _getJson(url).then((data) => data.
         map<MediaItem>((item) => MediaItem(item, MediaType.movie))
+        .toList());
+  }
+
+  Future<List<Video>> fetchVideosForComic(String comic) async{
+
+    // String j = "[{\"id\": 123, \"title\": \"Tanmay Bhat\", \"poster_path\": \"https://upload.wikimedia.org/wikipedia/commons/d/df/Tanmay_Bhat.png\"},{\"id\": 432, \"title\": \"T Bhat\", \"poster_path\": \"https://upload.wikimedia.org/wikipedia/commons/d/df/Tanmay_Bhat.png\"}]";
+    var url = Uri.http(baseUrl, '/videos/' +  comic);
+
+    return _getJson(url).then((data) => data.
+    map<Video>((item) => Video(item))
         .toList());
   }
 

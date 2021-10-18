@@ -1,22 +1,16 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'package:standup_india/model/cast.dart';
 import 'package:standup_india/model/mediaitem.dart';
 import 'package:standup_india/model/tvseason.dart';
+import 'package:standup_india/model/video.dart';
 import 'package:standup_india/scoped_models/app_model.dart';
 import 'package:standup_india/util/api_client.dart';
 import 'package:standup_india/util/mediaproviders.dart';
-import 'package:standup_india/util/styles.dart';
-import 'package:standup_india/util/utils.dart';
-import 'package:standup_india/widgets/media_detail/cast_section.dart';
-import 'package:standup_india/widgets/media_detail/meta_section.dart';
-import 'package:standup_india/widgets/media_detail/season_section.dart';
-import 'package:standup_india/widgets/media_detail/similar_section.dart';
 import 'package:standup_india/widgets/utilviews/bottom_gradient.dart';
 import 'package:standup_india/widgets/utilviews/text_bubble.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class MediaDetailScreen extends StatefulWidget {
   final MediaItem _mediaItem;
@@ -37,6 +31,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
   List<MediaItem> _similarMedia = [];
   dynamic _mediaDetails;
   bool _visible = false;
+  final ApiClient _apiClient = ApiClient();
 
   @override
   void initState() {
@@ -83,14 +78,13 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: primary,
-        body: CustomScrollView(
+        return CustomScrollView(
           slivers: <Widget>[
             _buildAppBar(widget._mediaItem),
-            _buildContentSection(widget._mediaItem),
+            _buildContentSection(widget._mediaItem)
+
           ],
-        ));
+        );
   }
 
   Widget _buildAppBar(MediaItem movie) {
@@ -114,7 +108,7 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
               child: FadeInImage.assetNetwork(
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  placeholder: "assets/placeholder.jpg",
+                  placeholder: "assets/placeholder.png",
                   image: widget._mediaItem.getBackDropUrl()),
             ),
             BottomGradient(),
@@ -161,73 +155,57 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
     );
   }
 
+
+
   Widget _buildContentSection(MediaItem media) {
-    return SliverList(
-      delegate: SliverChildListDelegate(<Widget>[
-        Container(
-          decoration: BoxDecoration(color: const Color(0xff222128)),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "SYNOPSIS",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                Container(
-                  height: 8.0,
-                ),
-                Text(media.overview,
-                    style:
-                        const TextStyle(color: Colors.white, fontSize: 12.0)),
-                Container(
-                  height: 8.0,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(color: primary),
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: _actorList == null
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : CastSection(_actorList)),
-        ),
-        Container(
-          decoration: BoxDecoration(color: primaryDark),
-          child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: _mediaDetails == null
-                  ? Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : MetaSection(_mediaDetails)),
-        ),
-        (widget._mediaItem.type == MediaType.show)
-            ? Container(
-                decoration: BoxDecoration(color: primary),
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: _seasonList == null
-                        ? Container()
-                        : SeasonSection(widget._mediaItem, _seasonList)),
-              )
-            : Container(),
-        Container(
-            decoration: BoxDecoration(
-                color: (widget._mediaItem.type == MediaType.movie
-                    ? primary
-                    : primaryDark)),
-            child: _similarMedia == null
-                ? Container()
-                : SimilarSection(_similarMedia))
-      ]),
+    final ApiClient _apiClient = ApiClient();
+
+    return FutureBuilder<List<Video>>(
+      future: _apiClient.fetchVideosForComic(media.title), // this is a code smell. Make sure that the future is NOT recreated when build is called. Create the future in initState instead.
+      builder: (context, snapshot){
+        Widget newsListSliver;
+          if (snapshot.connectionState ==  ConnectionState.waiting) {
+            newsListSliver =
+                SliverToBoxAdapter(child: CircularProgressIndicator(),);
+          }
+            else {
+            if (snapshot.hasError)
+              return Text('Error: ${snapshot.error}');
+            else
+              newsListSliver =
+                  SliverList(delegate: SliverChildListDelegate(<Widget>[
+                    VideoList(items: snapshot.data!)]));
+          }
+
+        return newsListSliver;
+      },
     );
   }
 }
+
+
+class VideoList extends StatelessWidget {
+  final List<Video> items;
+
+  const VideoList({Key? key, required this.items}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+          // Let the ListView know how many items it needs to build.
+          itemCount: items.length,
+          // Provide a builder function. This is where the magic happens.
+          // Convert each item into a widget based on the type of item it is.
+          itemBuilder: (context, index) {
+            final item = items[index];
+
+            return item.getThumb(context, items);
+          },
+        );
+  }
+}
+
+/// The base class for the different types of items the list can contain

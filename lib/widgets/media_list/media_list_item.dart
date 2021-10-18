@@ -29,8 +29,7 @@ class MediaListItem extends StatelessWidget {
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 4.0),
-                  child: Text(
-                    "G",
+                  child: Text("",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -94,7 +93,7 @@ class MediaListItem extends StatelessWidget {
           children: <Widget>[
             Hero(
               child: FadeInImage.assetNetwork(
-                placeholder: "assets/placeholder.jpg",
+                placeholder: "assets/placeholder.png",
                 image: movie.getBackDropUrl(),
                 fit: BoxFit.cover,
                 width: double.infinity,

@@ -9,7 +9,7 @@ class CinematicApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModelDescendant<AppModel>(
       builder: (context, child, model) => MaterialApp(
-            title: 'Cinematic',
+            title: 'Standup India',
             theme: model.theme,
             home: HomePage(),
           ),

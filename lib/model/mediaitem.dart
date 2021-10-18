@@ -1,5 +1,6 @@
 import 'package:standup_india/util/utils.dart';
 
+
 class MediaItem {
   MediaType type;
   int id;
@@ -29,7 +30,7 @@ class MediaItem {
         id = jsonMap["id"].toInt(),
         voteAverage = 123.00,
         title = jsonMap[(type == MediaType.movie ? "title" : "name")],
-        posterPath = jsonMap["poster_path"] ?? "",
+        posterPath = jsonMap["posterPath"] ?? "",
         backdropPath = jsonMap["backdrop_path"] ?? "",
         overview = jsonMap["overview"],
         releaseDate = jsonMap[

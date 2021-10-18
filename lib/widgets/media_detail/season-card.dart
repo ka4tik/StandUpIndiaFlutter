@@ -26,7 +26,7 @@ class SeasonCard extends StatelessWidget {
             Hero(
               tag: 'Season-Hero-${season.id}',
               child: FadeInImage.assetNetwork(
-                placeholder: 'assets/placeholder.jpg',
+                placeholder: 'assets/placeholder.png',
                 image: season.getPosterUrl(),
                 fit: BoxFit.cover,
                 height: height,

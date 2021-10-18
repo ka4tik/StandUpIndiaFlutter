@@ -31,7 +31,7 @@ class HomePageState extends State<HomePage> {
             },
           )
         ],
-        title: Text("Cinematic"),
+        title: Text("Standup India"),
       ),
       drawer: Drawer(
         child: ListView(
