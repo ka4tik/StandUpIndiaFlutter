@@ -16,8 +16,8 @@ class ApiClient {
 
   ApiClient._internal();
 
-  // final String baseUrl = '10.0.2.2:8080';
-  final String baseUrl = 'agile-retreat-82679.herokuapp.com';
+  final String baseUrl = '10.0.2.2:8080';
+  // final String baseUrl = 'agile-retreat-82679.herokuapp.com';
 
   factory ApiClient() => _client;
 
@@ -118,13 +118,11 @@ class ApiClient {
         .toList());
   }
 
-  Future<List<MediaItem>> fetchShows(
-      {int page: 1, String category: "popular"}) async {
-    var url = Uri.https(baseUrl, '3/tv/$category',
-        {'api_key': API_KEY, 'page': page.toString()});
+  Future<List<Video>> fetchShows() {
+    var url = Uri.http(baseUrl, 'videos');
 
-    return _getJson(url).then((json) => json['results']).then((data) => data
-        .map<MediaItem>((item) => MediaItem(item, MediaType.show))
+    return _getJson(url).then((data) => data
+        .map<Video>((item) => Video(item))
         .toList());
   }
 

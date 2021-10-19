@@ -11,9 +11,7 @@ import 'package:standup_india/widgets/media_detail/video_detail.dart';
 import 'package:standup_india/widgets/season_detail/season_detail_screen.dart';
 
 goToMovieDetails(BuildContext context, MediaItem movie) {
-  MediaProvider provider =
-      (movie.type == MediaType.movie) ? MovieProvider() : ShowProvider();
-  _pushWidgetWithFade(context, MediaDetailScreen(movie, provider));
+  _pushWidgetWithFade(context, MediaDetailScreen(movie));
 }
 
 goToSeasonDetails(BuildContext context, MediaItem show, TvSeason season) =>

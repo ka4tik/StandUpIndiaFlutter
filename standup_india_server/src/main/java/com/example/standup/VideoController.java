@@ -50,11 +50,13 @@ public class VideoController {
 
         likesCounts.keySet().forEach(comic -> {
             Comedian comics = comediansRepository.findByTitle(comic);
-            comics.setLikes(likesCounts.get(comic));
-            comics.setDislikes(dislikesCounts.get(comic));
-            comics.setViewCount(viewCounts.get(comic));
-            comics.setLovedRatio((double) (likesCounts.get(comic)/dislikesCounts.get(comic)));
-            comediansRepository.save(comics);
+            if (comics != null) {
+                comics.setLikes(likesCounts.get(comic));
+                comics.setDislikes(dislikesCounts.get(comic));
+                comics.setViewCount(viewCounts.get(comic));
+                comics.setLovedRatio((double) (likesCounts.get(comic) / dislikesCounts.get(comic)));
+                comediansRepository.save(comics);
+            }
         });
         videoRepository.findAll().forEach(video -> {
 
@@ -74,5 +76,10 @@ public class VideoController {
     @GetMapping("/videos/{comic}")
     List<Video> getVideosForComic(@PathVariable String comic) {
        return videoRepository.findAllByComic(comic);
+    }
+
+    @GetMapping("/videos")
+    List<Video> getVideosByViews() {
+        return videoRepository.findAll();
     }
 }

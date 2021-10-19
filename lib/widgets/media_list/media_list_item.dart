@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:standup_india/model/mediaitem.dart';
+import 'package:standup_india/model/video.dart';
 import 'package:standup_india/util/navigator.dart';
 import 'package:standup_india/util/utils.dart';
 
@@ -31,8 +32,46 @@ class NumberFormatter{
     return '';
   }
 }
+class VideoListItem extends StatelessWidget {
+  VideoListItem(this.video, this.items);
 
-class MediaListItem extends StatelessWidget {
+  Video video;
+  List<Video> items;
+
+  @override
+  Widget build(BuildContext context) {
+    return
+        GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () => goToVideoDetails(context, video, items),
+            child: IgnorePointer(
+                child: Center(
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        FadeInImage.assetNetwork(
+                          image: video.thumbnail,
+                          placeholder: 'assets/placeholder.png',
+                          height: 180,
+                          width: 380,
+                          fit: BoxFit.cover,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Center(child: Text(video.title)),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )));
+  }
+
+}
+
+
+  class MediaListItem extends StatelessWidget {
   MediaListItem(this.movie);
 
   final MediaItem movie;

@@ -15,8 +15,8 @@ class HomePageState extends State<HomePage> {
   int _page = 0;
   MediaType mediaType = MediaType.movie;
 
-  final MediaProvider movieProvider = MovieProvider();
-  final MediaProvider showProvider = ShowProvider();
+  final MovieProvider movieProvider = MovieProvider();
+  final VideoProvider showProvider = VideoProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +61,16 @@ class HomePageState extends State<HomePage> {
               height: 5.0,
             ),
             ListTile(
-              title: Text("Movies"),
+              title: Text("Comics"),
               selected: mediaType == MediaType.movie,
-              trailing: Icon(Icons.local_movies),
+              trailing: Icon(Icons.mic),
               onTap: () {
                 _changeMediaType(MediaType.movie);
                 Navigator.of(context).pop();
               },
             ),
             ListTile(
-              title: Text("TV Shows"),
+              title: Text("Videos"),
               selected: mediaType == MediaType.show,
               trailing: Icon(Icons.live_tv),
               onTap: () {
@@ -140,15 +140,15 @@ class HomePageState extends State<HomePage> {
   List<Widget> _getMediaList() {
     return (mediaType == MediaType.movie)
         ? <Widget>[
-            MediaList(movieProvider, "popular", key: Key("movies-popular"),
+            MediaList( "comics", "popular", key: Key("movies-popular"),
             ),
-            MediaList(movieProvider, "upcoming", key: Key("movies-upcoming")),
-            MediaList(movieProvider, "top_rated", key: Key("movies-top_rated")),
+            MediaList(  "comics", "upcoming", key: Key("movies-upcoming")),
+            MediaList(  "comics", "top_rated", key: Key("movies-top_rated")),
           ]
         : <Widget>[
-            MediaList(showProvider, "popular", key: Key("shows-popular")),
-            MediaList(showProvider, "on_the_air", key: Key("shows-on_the_air")),
-            MediaList(showProvider, "top_rated", key: Key("shows-top_rated")),
+            MediaList( "videos", "popular", key: Key("shows-popular")),
+            MediaList( "videos","on_the_air", key: Key("shows-on_the_air")),
+            MediaList("videos", "top_rated", key: Key("shows-top_rated")),
           ];
   }
 

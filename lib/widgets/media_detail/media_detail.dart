@@ -13,9 +13,8 @@ import 'package:standup_india/widgets/utilviews/text_bubble.dart';
 
 class MediaDetailScreen extends StatefulWidget {
   final MediaItem _mediaItem;
-  final MediaProvider provider;
 
-  MediaDetailScreen(this._mediaItem, this.provider);
+  MediaDetailScreen(this._mediaItem);
 
   @override
   MediaDetailScreenState createState() {

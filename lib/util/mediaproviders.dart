@@ -2,66 +2,26 @@ import 'dart:async';
 
 import 'package:standup_india/model/cast.dart';
 import 'package:standup_india/model/mediaitem.dart';
+import 'package:standup_india/model/video.dart';
 import 'package:standup_india/util/api_client.dart';
 
-abstract class MediaProvider {
-  Future<List<MediaItem>> loadMedia(String category, {int page: 1});
 
-  Future<List<Actor>> loadCast(int mediaId);
-
-  Future<dynamic> getDetails(int mediaId);
-
-  Future<List<MediaItem>> getSimilar(int mediaId);
-}
-
-class MovieProvider extends MediaProvider {
+class MovieProvider {
   MovieProvider();
 
   ApiClient _apiClient = ApiClient();
 
-  @override
   Future<List<MediaItem>> loadMedia(String category, {int page: 1}) {
     return _apiClient.fetchMovies();
-  }
-
-  @override
-  Future<List<MediaItem>> getSimilar(int mediaId) {
-    return _apiClient.fetchMovies();
-  }
-
-  @override
-  Future<dynamic> getDetails(int mediaId) {
-    return _apiClient.getMediaDetails(mediaId, type: "movie");
-  }
-
-  @override
-  Future<List<Actor>> loadCast(int mediaId) {
-    return _apiClient.getMediaCredits(mediaId, type: "movie");
   }
 }
 
-class ShowProvider extends MediaProvider {
-  ShowProvider();
+class VideoProvider {
+  VideoProvider();
 
   ApiClient _apiClient = ApiClient();
 
-  @override
-  Future<List<MediaItem>> loadMedia(String category, {int page: 1}) {
-    return _apiClient.fetchShows(category: category, page: page);
-  }
-
-  @override
-  Future<List<MediaItem>> getSimilar(int mediaId) {
-    return _apiClient.getSimilarMedia(mediaId, type: "tv");
-  }
-
-  @override
-  Future<dynamic> getDetails(int mediaId) {
-    return _apiClient.getMediaDetails(mediaId, type: "tv");
-  }
-
-  @override
-  Future<List<Actor>> loadCast(int mediaId) {
-    return _apiClient.getMediaCredits(mediaId, type: "tv");
+  Future<List<Video>> loadVideos(String category, {int page: 1}) {
+    return _apiClient.fetchShows();
   }
 }
