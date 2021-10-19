@@ -24,12 +24,6 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         actions: <Widget>[
           ToggleThemeButton(),
-          IconButton(
-            icon: Icon(Icons.search, color: Colors.white),
-            onPressed: () {
-
-            },
-          )
         ],
         title: Text("Standup India"),
       ),
@@ -45,13 +39,7 @@ class HomePageState extends State<HomePage> {
                     const Color(0xff4e4376),
                   ])),
                 )),
-            ListTile(
-              title: Text("Search"),
-              trailing: Icon(Icons.search),
-              onTap: () => {
 
-              }
-            ),
             ListTile(
               title: Text("Favorites"),
               trailing: Icon(Icons.favorite),
@@ -128,7 +116,7 @@ class HomePageState extends State<HomePage> {
         BottomNavigationBarItem(
             icon: Icon(Icons.thumb_up), title: Text('Popular')),
         BottomNavigationBarItem(
-            icon: Icon(Icons.live_tv), title: Text('On The Air')),
+            icon: Icon(Icons.live_tv), title: Text('Recent')),
         BottomNavigationBarItem(
             icon: Icon(Icons.star), title: Text('Top Rated')),
       ];
