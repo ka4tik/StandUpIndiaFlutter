@@ -118,8 +118,24 @@ class ApiClient {
         .toList());
   }
 
-  Future<List<Video>> fetchShows() {
-    var url = Uri.http(baseUrl, 'videos');
+  Future<List<Video>> fetchVideosByViews() {
+    var url = Uri.http(baseUrl, 'videosByViews');
+
+    return _getJson(url).then((data) => data
+        .map<Video>((item) => Video(item))
+        .toList());
+  }
+
+  Future<List<Video>> fetchVideosByLikedCount() {
+    var url = Uri.http(baseUrl, 'videosByLikedCount');
+
+    return _getJson(url).then((data) => data
+        .map<Video>((item) => Video(item))
+        .toList());
+  }
+
+  Future<List<Video>> fetchVideosByPublishedTime() {
+    var url = Uri.http(baseUrl, 'videosByPublishedTime');
 
     return _getJson(url).then((data) => data
         .map<Video>((item) => Video(item))

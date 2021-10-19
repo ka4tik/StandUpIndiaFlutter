@@ -25,4 +25,5 @@ public class Video {
     private Integer likes;
     private Integer dislikes;
     private Integer lovedRatio;
+    private Long publishedTime;
 }

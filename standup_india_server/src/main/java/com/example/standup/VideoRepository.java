@@ -7,5 +7,10 @@ import java.util.List;
 public interface VideoRepository extends JpaRepository<Video, String> {
     List<Video> findAllByComic(String comic);
 
-    List<Video> findAllByOrderByViewCount();
+    List<Video> findAllByOrderByViewCountDesc();
+
+    List<Video> findAllByOrderByLovedRatioDesc();
+
+    List<Video> findAllByOrderByPublishedTimeDesc();
+
 }

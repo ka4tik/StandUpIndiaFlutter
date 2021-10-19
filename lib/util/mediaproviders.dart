@@ -22,6 +22,12 @@ class VideoProvider {
   ApiClient _apiClient = ApiClient();
 
   Future<List<Video>> loadVideos(String category, {int page: 1}) {
-    return _apiClient.fetchShows();
+    if (category == 'on_the_air') {
+     return  _apiClient.fetchVideosByPublishedTime();
+    } else if (category == 'popular') {
+      return _apiClient.fetchVideosByViews();
+    }
+    return _apiClient.fetchVideosByLikedCount();
+
   }
 }

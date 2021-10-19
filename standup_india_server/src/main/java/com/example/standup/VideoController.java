@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +26,7 @@ public class VideoController {
 
     @Autowired
     private YoutubeApi youtubeApi;
+
     @PostConstruct
     void post() {
 
@@ -35,20 +40,23 @@ public class VideoController {
             Root details = youtubeApi.getDetails(id);
             likesCounts.putIfAbsent(video.getComic(), 0);
             int likes = Integer.parseInt(details.getItems().get(0).getStatistics().getLikeCount());
-            likesCounts.put(video.getComic(), likesCounts.get(video.getComic()) +  likes);
+            likesCounts.put(video.getComic(), likesCounts.get(video.getComic()) + likes);
 
             int dislikes = Integer.parseInt(details.getItems().get(0).getStatistics().getDislikeCount());
             dislikesCounts.putIfAbsent(video.getComic(), 0);
-            dislikesCounts.put(video.getComic(), dislikesCounts.get(video.getComic()) +  dislikes);
+            dislikesCounts.put(video.getComic(), dislikesCounts.get(video.getComic()) + dislikes);
 
             viewCounts.putIfAbsent(video.getComic(), 0);
             int viewCount = Integer.parseInt(details.getItems().get(0).getStatistics().getViewCount());
-            viewCounts.put(video.getComic(), viewCounts.get(video.getComic()) +  viewCount);
+            viewCounts.put(video.getComic(), viewCounts.get(video.getComic()) + viewCount);
 
+            String publishedDate = details.getItems().get(0).getSnippet().getPublishedAt();
+//            long publishTime = LocalDate.parse(publishedDate.substring(0,10)).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC);
             video.setLikes(likes);
             video.setDislikes(dislikes);
             video.setViewCount(viewCount);
-            video.setLovedRatio(likes/dislikes);
+            video.setLovedRatio(likes / dislikes);
+//            video.setPublishedTime(publishTime);
             videoRepository.save(video);
 
         });
@@ -65,7 +73,7 @@ public class VideoController {
         });
         videoRepository.findAll().forEach(video -> {
 
-            if (video.getTitle() == null ) {
+            if (video.getTitle() == null) {
                 String id = video.getUrl().split("v=")[1];
                 Root details = youtubeApi.getDetails(id);
                 String title = details.getItems().get(0).getSnippet().getTitle();
@@ -78,13 +86,24 @@ public class VideoController {
 
 
     }
+
     @GetMapping("/videos/{comic}")
     List<Video> getVideosForComic(@PathVariable String comic) {
-       return videoRepository.findAllByComic(comic);
+        return videoRepository.findAllByComic(comic);
     }
 
-    @GetMapping("/videos")
+    @GetMapping("/videosByViews")
     List<Video> getVideosByViews() {
-        return videoRepository.findAllByOrderByViewCount();
+        return videoRepository.findAllByOrderByViewCountDesc();
+    }
+
+    @GetMapping("/videosByLikedCount")
+    List<Video> getVideosByLikedCount() {
+        return videoRepository.findAllByOrderByLovedRatioDesc();
+    }
+
+    @GetMapping("/videosByPublishedTime")
+    List<Video> getVideosByPublishedTime() {
+        return videoRepository.findAllByOrderByPublishedTimeDesc();
     }
 }
