@@ -23,24 +23,22 @@ class MediaDetailScreen extends StatefulWidget {
 }
 
 class MediaDetailScreenState extends State<MediaDetailScreen> {
-
   bool _visible = false;
+
   @override
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: 100), () => setState(() => _visible = true));
   }
 
-
   @override
   Widget build(BuildContext context) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            _buildAppBar(widget._mediaItem),
-            _buildContentSection(widget._mediaItem)
-
-          ],
-        );
+    return CustomScrollView(
+      slivers: <Widget>[
+        _buildAppBar(widget._mediaItem),
+        _buildContentSection(widget._mediaItem)
+      ],
+    );
   }
 
   Widget _buildAppBar(MediaItem movie) {
@@ -94,7 +92,8 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
                 Container(
                   width: 8.0,
                 ),
-                TextBubble(NumberFormatter.formatter(mediaItem.viewCount.toString()),
+                TextBubble(
+                    NumberFormatter.formatter(mediaItem.viewCount.toString()) + " views",
                     backgroundColor: Color(0xffF47663)),
               ],
             ),
@@ -103,42 +102,39 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
               child: Text(mediaItem.title,
                   style: TextStyle(color: Color(0xFFEEEEEE), fontSize: 20.0)),
             ),
-            Row(
-            )
+            Row()
           ],
         ),
       ),
     );
   }
 
-
-
   Widget _buildContentSection(MediaItem media) {
     final ApiClient _apiClient = ApiClient();
 
     return FutureBuilder<List<Video>>(
-      future: _apiClient.fetchVideosForComic(media.title), // this is a code smell. Make sure that the future is NOT recreated when build is called. Create the future in initState instead.
-      builder: (context, snapshot){
+      future: _apiClient.fetchVideosForComic(media.title),
+      // this is a code smell. Make sure that the future is NOT recreated when build is called. Create the future in initState instead.
+      builder: (context, snapshot) {
         Widget newsListSliver;
-          if (snapshot.connectionState ==  ConnectionState.waiting) {
-            newsListSliver =
-                SliverToBoxAdapter(child: CircularProgressIndicator(),);
-          }
-            else {
-            if (snapshot.hasError)
-              return Text('Error: ${snapshot.error}');
-            else
-              newsListSliver =
-                  SliverList(delegate: SliverChildListDelegate(<Widget>[
-                    VideoList(items: snapshot.data!)]));
-          }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          newsListSliver = SliverToBoxAdapter(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          if (snapshot.hasError)
+            return Text('Error: ${snapshot.error}');
+          else
+            newsListSliver = SliverList(
+                delegate: SliverChildListDelegate(
+                    <Widget>[VideoList(items: snapshot.data!)]));
+        }
 
         return newsListSliver;
       },
     );
   }
 }
-
 
 class VideoList extends StatelessWidget {
   final List<Video> items;
@@ -149,25 +145,23 @@ class VideoList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Column(
-          children: <Widget>[
-            Text('videos'),
-            ListView.builder(
-              // scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              // Let the ListView know how many items it needs to build.
-              itemCount: items.length,
-              // Provide a builder function. This is where the magic happens.
-              // Convert each item into a widget based on the type of item it is.
-              itemBuilder: (context, index) {
-                final item = items[index];
-
-                return item.getThumb(context, items);
-              },
-            )
-          ],
+      children: <Widget>[
+        Text('videos'),
+        ListView.builder(
+          // scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          // Let the ListView know how many items it needs to build.
+          itemCount: items.length,
+          // Provide a builder function. This is where the magic happens.
+          // Convert each item into a widget based on the type of item it is.
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return item.getThumb(context, items);
+          },
         )
-    );
+      ],
+    ));
   }
 }
 

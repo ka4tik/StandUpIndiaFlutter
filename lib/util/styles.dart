@@ -7,3 +7,4 @@ Color salmon = const Color(0xFFF47663);
 
 final TextStyle captionStyle = TextStyle(color: Colors.grey[400]);
 final TextStyle whiteBody = TextStyle(color: Colors.white);
+final TextStyle yellowStyle = TextStyle(color: Colors.white);

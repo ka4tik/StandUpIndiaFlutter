@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:standup_india/model/mediaitem.dart';
 import 'package:standup_india/model/video.dart';
 import 'package:standup_india/util/navigator.dart';
@@ -41,6 +42,9 @@ class VideoListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 25.0),
+    child:
         GestureDetector(
             behavior: HitTestBehavior.translucent,
             onTap: () => goToVideoDetails(context, video, items),
@@ -62,9 +66,14 @@ class VideoListItem extends StatelessWidget {
                             Center(child: Text(video.title)),
                           ],
                         ),
+                        Row(
+                          children: <Widget>[
+                            Center(child: Text(video.viewCount.toString() + " views")),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
+                  )),
                 )));
   }
 
@@ -115,7 +124,13 @@ class VideoListItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Text(
-                    movie.lovedRatio.toString() + " Love Ratio",
+                    (movie.lovedRatio).toString() + "",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  IconButton(onPressed: (){print("pressesd");}, icon: new
+                  Icon(FontAwesomeIcons.thumbsUp)),
+                  Text(
+                    "Ratio",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Container(
@@ -130,7 +145,8 @@ class VideoListItem extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     NumberFormatter.formatter(movie.viewCount.toString()) + " views",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: TextStyle(color: Colors.yellow, fontSize: 15.0),
+
                   ),
                   Container(
                     width: 4.0,

@@ -8,6 +8,7 @@ class Video {
   late String url;
   late String thumbnail;
   late String comic;
+  late int viewCount = 0;
 
   // Video({required this.title, required this.thumbnail, required this.url, required this.comic});
 
@@ -17,7 +18,8 @@ class Video {
       : url = jsonMap['url'],
         comic = jsonMap['comic'],
         title = jsonMap['title'],
-        thumbnail = jsonMap['thumbnail'];
+        thumbnail = jsonMap['thumbnail'],
+        viewCount = jsonMap['viewCount'];
 
   Widget getThumb(context, items) => VideoListItem(this, items);
 }
