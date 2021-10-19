@@ -2,7 +2,7 @@
     package="com.example.standup_india">
    <application
         android:label="standup_india"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

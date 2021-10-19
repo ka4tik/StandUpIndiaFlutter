@@ -119,11 +119,9 @@ class HomePageState extends State<HomePage> {
     if (mediaType == MediaType.movie) {
       return [
         BottomNavigationBarItem(
-            icon: Icon(Icons.thumb_up), title: Text('Popular')),
+            icon: Icon(Icons.star), title: Text('Top Rated')),
         BottomNavigationBarItem(
             icon: Icon(Icons.update), title: Text('Upcoming')),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.star), title: Text('Top Rated')),
       ];
     } else {
       return [
@@ -140,10 +138,9 @@ class HomePageState extends State<HomePage> {
   List<Widget> _getMediaList() {
     return (mediaType == MediaType.movie)
         ? <Widget>[
-            MediaList( "comics", "popular", key: Key("movies-popular"),
+            MediaList( "comics", "top_rated", key: Key("movies-popular"),
             ),
             MediaList(  "comics", "upcoming", key: Key("movies-upcoming")),
-            MediaList(  "comics", "top_rated", key: Key("movies-top_rated")),
           ]
         : <Widget>[
             MediaList( "videos", "popular", key: Key("shows-popular")),

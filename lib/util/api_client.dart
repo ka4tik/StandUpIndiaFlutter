@@ -16,8 +16,8 @@ class ApiClient {
 
   ApiClient._internal();
 
-  final String baseUrl = '10.0.2.2:8080';
-  // final String baseUrl = 'agile-retreat-82679.herokuapp.com';
+  // final String baseUrl = '10.0.2.2:8080';
+  final String baseUrl = 'agile-retreat-82679.herokuapp.com';
 
   factory ApiClient() => _client;
 
