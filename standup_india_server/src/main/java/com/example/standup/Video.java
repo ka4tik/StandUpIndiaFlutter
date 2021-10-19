@@ -21,4 +21,8 @@ public class Video {
     private String comic;
     private String thumbnail;
     private String title;
+    private Integer viewCount;
+    private Integer likes;
+    private Integer dislikes;
+    private Integer lovedRatio;
 }

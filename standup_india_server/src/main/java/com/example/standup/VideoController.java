@@ -45,6 +45,11 @@ public class VideoController {
             int viewCount = Integer.parseInt(details.getItems().get(0).getStatistics().getViewCount());
             viewCounts.put(video.getComic(), viewCounts.get(video.getComic()) +  viewCount);
 
+            video.setLikes(likes);
+            video.setDislikes(dislikes);
+            video.setViewCount(viewCount);
+            video.setLovedRatio(likes/dislikes);
+            videoRepository.save(video);
 
         });
 
@@ -80,6 +85,6 @@ public class VideoController {
 
     @GetMapping("/videos")
     List<Video> getVideosByViews() {
-        return videoRepository.findAll();
+        return videoRepository.findAllByOrderByViewCount();
     }
 }

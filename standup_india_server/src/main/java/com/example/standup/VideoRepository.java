@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface VideoRepository extends JpaRepository<Video, String> {
     List<Video> findAllByComic(String comic);
+
+    List<Video> findAllByOrderByViewCount();
 }
