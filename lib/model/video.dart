@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:standup_india/util/navigator.dart';
+import 'package:standup_india/widgets/media_list/media_list_item.dart';
 
 class Video {
   late String title;
@@ -18,29 +19,5 @@ class Video {
         title = jsonMap['title'],
         thumbnail = jsonMap['thumbnail'];
 
-  Widget getThumb(context, items) => GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () => goToVideoDetails(context, this, items),
-      child: IgnorePointer(
-          child: Center(
-        child: Card(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              FadeInImage.assetNetwork(
-                image: thumbnail,
-                placeholder: 'assets/placeholder.png',
-                height: 180,
-                width: 380,
-                fit: BoxFit.cover,
-              ),
-              Row(
-                children: <Widget>[
-                  Center(child: Text(title)),
-                ],
-              ),
-            ],
-          ),
-        ),
-      )));
+  Widget getThumb(context, items) => VideoListItem(this, items);
 }
