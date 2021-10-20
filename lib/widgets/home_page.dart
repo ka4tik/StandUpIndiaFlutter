@@ -109,7 +109,10 @@ class HomePageState extends State<HomePage> {
         BottomNavigationBarItem(
             icon: Icon(Icons.star), title: Text('Top Rated')),
         BottomNavigationBarItem(
-            icon: Icon(Icons.update), title: Text('Upcoming')),
+            icon: Icon(Icons.thumb_up), title: Text('Popular Videos')),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.live_tv), title: Text('Recent Videos')),
+
       ];
     } else {
       return [
@@ -128,8 +131,10 @@ class HomePageState extends State<HomePage> {
         ? <Widget>[
             MediaList( "comics", "top_rated", key: Key("movies-popular"),
             ),
-            MediaList(  "comics", "upcoming", key: Key("movies-upcoming")),
-          ]
+            MediaList(  "vidoes", "popular", key: Key("videos-popular")),
+           MediaList( "videos","on_the_air", key: Key("shows-on_the_air")),
+
+    ]
         : <Widget>[
             MediaList( "videos", "popular", key: Key("shows-popular")),
             MediaList( "videos","on_the_air", key: Key("shows-on_the_air")),

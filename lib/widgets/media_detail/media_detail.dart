@@ -10,6 +10,7 @@ import 'package:standup_india/util/mediaproviders.dart';
 import 'package:standup_india/widgets/media_list/media_list_item.dart';
 import 'package:standup_india/widgets/utilviews/bottom_gradient.dart';
 import 'package:standup_india/widgets/utilviews/text_bubble.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class MediaDetailScreen extends StatefulWidget {
   final MediaItem _mediaItem;
@@ -59,10 +60,10 @@ class MediaDetailScreenState extends State<MediaDetailScreen> {
           children: <Widget>[
             Hero(
               tag: "Movie-Tag-${widget._mediaItem.id}",
-              child: FadeInImage.assetNetwork(
+              child: FadeInImage.memoryNetwork(
                   fit: BoxFit.cover,
                   width: double.infinity,
-                  placeholder: "assets/placeholder.png",
+                  placeholder: kTransparentImage,
                   image: widget._mediaItem.getBackDropUrl()),
             ),
             BottomGradient(),

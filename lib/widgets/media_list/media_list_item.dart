@@ -5,6 +5,7 @@ import 'package:standup_india/model/video.dart';
 import 'package:standup_india/util/navigator.dart';
 import 'package:standup_india/util/styles.dart';
 import 'package:standup_india/widgets/utilviews/text_bubble.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class NumberFormatter {
   static String formatter(String currentBalance) {
@@ -61,9 +62,9 @@ class VideoListItem extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    FadeInImage.assetNetwork(
+                    FadeInImage.memoryNetwork(
                       image: video.thumbnail,
-                      placeholder: 'assets/placeholder.png',
+                      placeholder: kTransparentImage,
                       height: 180,
                       width: 380,
                       fit: BoxFit.cover,
@@ -173,8 +174,8 @@ class MediaListItem extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Hero(
-              child: FadeInImage.assetNetwork(
-                placeholder: "assets/placeholder.png",
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
                 image: movie.getBackDropUrl(),
                 fit: BoxFit.cover,
                 width: double.infinity,
