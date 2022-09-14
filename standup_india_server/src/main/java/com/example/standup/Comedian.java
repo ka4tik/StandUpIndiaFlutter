@@ -24,4 +24,5 @@ public class Comedian {
     private Integer dislikes;
     private Double lovedRatio;
     private Integer viewCount;
+    private Integer commentsCount;
 }

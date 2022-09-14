@@ -27,7 +27,7 @@ public class VideoController {
     void post() {
 
         Map<String, Integer> likesCounts = new HashMap<>();
-        Map<String, Integer> dislikesCounts = new HashMap<>();
+        Map<String, Integer> commentsCount = new HashMap<>();
         Map<String, Integer> viewCounts = new HashMap<>();
 
         videoRepository.findAll().forEach(video -> {
@@ -38,9 +38,9 @@ public class VideoController {
             int likes = Integer.parseInt(details.getItems().get(0).getStatistics().getLikeCount());
             likesCounts.put(video.getComic(), likesCounts.get(video.getComic()) + likes);
 
-            int dislikes = Integer.parseInt(details.getItems().get(0).getStatistics().getDislikeCount());
-            dislikesCounts.putIfAbsent(video.getComic(), 0);
-            dislikesCounts.put(video.getComic(), dislikesCounts.get(video.getComic()) + dislikes);
+            int commentCount = Integer.parseInt(details.getItems().get(0).getStatistics().getCommentCount());
+            commentsCount.putIfAbsent(video.getComic(), 0);
+//            dislikesCounts.put(video.getComic(), dislikesCounts.get(video.getComic()) + dislikes);
 
             viewCounts.putIfAbsent(video.getComic(), 0);
             int viewCount = Integer.parseInt(details.getItems().get(0).getStatistics().getViewCount());
@@ -49,9 +49,9 @@ public class VideoController {
             String publishedDate = details.getItems().get(0).getSnippet().getPublishedAt();
 //            long publishTime = LocalDate.parse(publishedDate.substring(0,10)).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC);
             video.setLikes(likes);
-            video.setDislikes(dislikes);
+            video.setCommentsCount(commentCount);
             video.setViewCount(viewCount);
-            video.setLovedRatio(likes / dislikes);
+//            video.setLovedRatio(likes / dislikes);
 //            video.setPublishedTime(publishTime);
             videoRepository.save(video);
 
@@ -61,9 +61,9 @@ public class VideoController {
             Comedian comics = comediansRepository.findByTitle(comic);
             if (comics != null) {
                 comics.setLikes(likesCounts.get(comic));
-                comics.setDislikes(dislikesCounts.get(comic));
+                comics.setCommentsCount(commentsCount.get(comic));
                 comics.setViewCount(viewCounts.get(comic));
-                comics.setLovedRatio((double) (likesCounts.get(comic) / dislikesCounts.get(comic)));
+//                comics.setLovedRatio((double) (likesCounts.get(comic) / dislikesCounts.get(comic)));
                 comediansRepository.save(comics);
             }
         });
