@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,7 @@ public class VideoController {
     @Autowired
     private YoutubeApi youtubeApi;
 
-    @PostConstruct
+//    @PostConstruct
     void post() {
 
         Map<String, Integer> likesCounts = new HashMap<>();
@@ -34,26 +37,46 @@ public class VideoController {
             String id = video.getUrl().split("v=")[1];
 
             Root details = youtubeApi.getDetails(id);
-            likesCounts.putIfAbsent(video.getComic(), 0);
-            int likes = Integer.parseInt(details.getItems().get(0).getStatistics().getLikeCount());
-            likesCounts.put(video.getComic(), likesCounts.get(video.getComic()) + likes);
 
-            int commentCount = Integer.parseInt(details.getItems().get(0).getStatistics().getCommentCount());
-            commentsCount.putIfAbsent(video.getComic(), 0);
+            try {
+                likesCounts.putIfAbsent(video.getComic(), 0);
+                int likes = Integer.parseInt(details.getItems().get(0).getStatistics().getLikeCount());
+                likesCounts.put(video.getComic(), likesCounts.get(video.getComic()) + likes);
+                video.setLikes(likes);
+
+            }
+            catch (Exception e) {
+//                e.printStackTrace();
+                return;
+            }
+
+
+
+            try {
+                int commentCount = Integer.parseInt(details.getItems().get(0).getStatistics().getCommentCount());
+                commentsCount.putIfAbsent(video.getComic(), 0);
+                video.setCommentsCount(commentCount);
+
+            } catch (Exception e) {
+//                e.printStackTrace();
+                return;
+            }
 //            dislikesCounts.put(video.getComic(), dislikesCounts.get(video.getComic()) + dislikes);
 
-            viewCounts.putIfAbsent(video.getComic(), 0);
-            int viewCount = Integer.parseInt(details.getItems().get(0).getStatistics().getViewCount());
-            viewCounts.put(video.getComic(), viewCounts.get(video.getComic()) + viewCount);
+            try {
+                viewCounts.putIfAbsent(video.getComic(), 0);
+                int viewCount = Integer.parseInt(details.getItems().get(0).getStatistics().getViewCount());
+                viewCounts.put(video.getComic(), viewCounts.get(video.getComic()) + viewCount);
 
-            String publishedDate = details.getItems().get(0).getSnippet().getPublishedAt();
-//            long publishTime = LocalDate.parse(publishedDate.substring(0,10)).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC);
-            video.setLikes(likes);
-            video.setCommentsCount(commentCount);
-            video.setViewCount(viewCount);
+                String publishedDate = details.getItems().get(0).getSnippet().getPublishedAt();
+                long publishTime = LocalDate.parse(publishedDate.substring(0, 10)).toEpochSecond(LocalTime.MIDNIGHT, ZoneOffset.UTC);
+                video.setViewCount(viewCount);
 //            video.setLovedRatio(likes / dislikes);
-//            video.setPublishedTime(publishTime);
-            videoRepository.save(video);
+                video.setPublishedTime(publishTime);
+                videoRepository.save(video);
+            } catch (Exception e){
+//                e.printStackTrace();
+            }
 
         });
 
