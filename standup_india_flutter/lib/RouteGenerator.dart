@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:standup_india_flutter/HomeScreen.dart';
+import 'package:standup_india_flutter/LightHomeScreen.dart';
 
 class RouteGenerator {
   static const _id = 'RouteGenerator';
@@ -9,7 +10,7 @@ class RouteGenerator {
     // log(_id, msg: "Pushed ${settings.name}(${args ?? ''})");
     switch (settings.name) {
       case HomeScreen.id:
-        return _route(const HomeScreen());
+        return _route( LightHomeScreen());
       default:
         return _errorRoute(settings.name);
     }
