@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:standup_india_flutter/card.dart';
+import 'package:standup_india_flutter/ComicCard.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = "HomePageScreen";

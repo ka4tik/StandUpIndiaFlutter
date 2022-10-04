@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:standup_india_flutter/VideoThumbnail.dart';
 
-import 'card.dart';
+import 'ComicCard.dart';
 
 class ComicVideosList extends StatelessWidget {
   static const id = 'ComicVideosList';
@@ -84,9 +85,11 @@ class ComicVideosList extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemCount: data.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return MyCard(
+                    return VideoThumbnail(
                         image: data[index]['thumbnail'],
-                        title: data[index]['title']);
+                        title: data[index]['title'],
+                      url: data[index]['url'],
+                    );
                   })),
 
           const SizedBox(

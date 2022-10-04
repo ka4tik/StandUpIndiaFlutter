@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:standup_india_flutter/ComicVideosList.dart';
+import 'package:standup_india_flutter/ComicVideosListScreen.dart';
+import 'package:standup_india_flutter/YoutubePlayerScreen.dart';
 
-class MyCard extends StatelessWidget {
+class VideoThumbnail extends StatelessWidget {
   final String image;
   final String title;
+  final String url;
 
-  const MyCard({
+  const VideoThumbnail({
     Key? key,
     required this.image,
     required this.title,
+    required this.url
   }) : super(key: key);
 
   // This widget is the root of your application.
@@ -20,7 +23,7 @@ class MyCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ComicVideosList(comic: title),
+              builder: (context) => YoutubePlayerScreen(url: url),
             ),
           );
         },
